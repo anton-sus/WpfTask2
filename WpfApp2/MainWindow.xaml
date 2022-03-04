@@ -6,6 +6,18 @@
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
         Title="Калькулятор" Height="500" Width="330" MinWidth="0">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle">
+            <Setter Property="Button.FontFamily" Value="HelveticaNeueCyr"/>
+            <Setter Property="Button.FontSize" Value="20"/>
+            <Setter Property="Button.BorderBrush" Value="#FF767676"/>
+            <Setter Property="Button.Foreground" Value="#FF636363"/>
+        </Style>
+        <Style x:Key="GreyButtonStyle" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Button.Background" Value="#FFC3C3C3"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid Cursor="Arrow">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.35*" />
@@ -17,8 +29,9 @@
                 <GradientStop Color="#FFFBE5E5" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Border BorderThickness="1" BorderBrush="Gray" Margin="10,10,10,10">
-            <TextBlock FontSize="36" FontFamily="HelveticaNeueCyr" Opacity="0.6" Padding="5" TextAlignment="Right" Background="#FFE8E9EA" ><Run Text="1 024,"/><Run Text="34"/></TextBlock>
+        <Border BorderThickness="3 3 1 1" BorderBrush="Gray" Margin="10,10,10,10">
+            <TextBlock x:Name="textBlock" FontSize="36" FontFamily="HelveticaNeueCyr" Opacity="0.6" Padding="5" TextAlignment="Right" 
+                       Background="#FFE8E9EA" ></TextBlock>
         </Border>
         <Grid Grid.Row="1" Margin="10,0,10,10" >
             <Grid.RowDefinitions>
@@ -34,26 +47,35 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button Content="%" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676" Background="#FFC3C3C3"/>
-            <Button Content="х²" Grid.Column="1" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676" Background="#FFC3C3C3" />
-            <Button Content="√х" Grid.Column="2" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676" Background="#FFC3C3C3"/>
-            <Button Content="C/CE" Grid.Column="3" Background="#FFC3C3C3" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="White" BorderBrush="#FF767676"/>
-            <Button Content="+" Grid.Column="3" Grid.Row="1" Background="#FFC3C3C3" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="-" Grid.Column="3" Grid.Row="2" Background="#FFC3C3C3" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="*" Grid.Column="3" Grid.Row="3" Background="#FFC3C3C3" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="/" Grid.Column="3" Grid.Row="4" Background="#FFC3C3C3" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="3" Grid.Column="2" Grid.Row="1" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="6" Grid.Column="2" Grid.Row="2" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="9" Grid.Column="2" Grid.Row="3" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="=" Grid.Column="2" Grid.Row="4" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="2" Grid.Column="1" Grid.Row="1" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="5" Grid.Column="1" Grid.Row="2" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="8" Grid.Column="1" Grid.Row="3" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="0" Grid.Column="1" Grid.Row="4" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="1" Grid.Row="1" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="4" Grid.Row="2" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="7" Grid.Row="3" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
-            <Button Content="," Grid.Row="4" FontFamily="HelveticaNeueCyr" FontSize="20" Foreground="#FF636363" BorderBrush="#FF767676"/>
+           
+            <!--functional buttons-->
+            
+            <Button Content="х²" Grid.Column="1" Style="{StaticResource GreyButtonStyle}" Click="ButtonPow_Click" />
+            <Button Content="√х" Grid.Column="2" Style="{StaticResource GreyButtonStyle}" Click="ButtonSqr_Click"/>
+            <Button Content="C/CE" Grid.Column="3" Foreground="White" Style="{StaticResource GreyButtonStyle}" Click="ButtonС_Click"/>
+            
+            <Button Content="+" Grid.Column="3" Grid.Row="1" Style="{StaticResource GreyButtonStyle}" Click="ButtonAriph_Click"/>
+            <Button Content="-" Grid.Column="3" Grid.Row="2" Style="{StaticResource GreyButtonStyle}"  Click="ButtonAriph_Click" />
+            <Button Content="*" Grid.Column="3" Grid.Row="3"  Style="{StaticResource GreyButtonStyle}"  Click="ButtonAriph_Click"/>
+            <Button Content="/" Grid.Column="3" Grid.Row="4"  Style="{StaticResource GreyButtonStyle}"  Click="ButtonAriph_Click"/>
+            <Button Content="%" Style="{StaticResource GreyButtonStyle}" Click="ButtonAriph_Click"/>
+
+            <Button Content="," Grid.Row="4" Style="{StaticResource ButtonStyle}" Click="ButtonPoint_Click"/>
+            <Button Content="=" Grid.Column="2" Grid.Row="4" Style="{StaticResource ButtonStyle}" Click="Button_Click"/>
+           
+            <!--number buttons-->
+            <Button Content="3" Grid.Column="2" Grid.Row="1" Style="{StaticResource ButtonStyle}" Click="Button1_Click"/>
+            <Button Content="6" Grid.Column="2" Grid.Row="2" Style="{StaticResource ButtonStyle}" Click="Button1_Click"/>
+            <Button Content="9" Grid.Column="2" Grid.Row="3" Style="{StaticResource ButtonStyle}" Click="Button1_Click"/>
+            <Button Content="2" Grid.Column="1" Grid.Row="1" Style="{StaticResource ButtonStyle}" Click="Button1_Click"/>
+            <Button Content="5" Grid.Column="1" Grid.Row="2" Style="{StaticResource ButtonStyle}" Click="Button1_Click"/>
+            <Button Content="8" Grid.Column="1" Grid.Row="3" Style="{StaticResource ButtonStyle}" Click="Button1_Click"/>
+            <Button Content="0" Grid.Column="1" Grid.Row="4" Style="{StaticResource ButtonStyle}" Click="Button1_Click"/>
+            <Button Content="1" Grid.Row="1" Style="{StaticResource ButtonStyle}" Click="Button1_Click"/>
+            <Button Content="4" Grid.Row="2" Style="{StaticResource ButtonStyle}" Click="Button1_Click"/>
+            <Button Content="7" Grid.Row="3" Style="{StaticResource ButtonStyle}" Click="Button1_Click"/>
+            
+            
         </Grid>
     </Grid>
 </Window>
